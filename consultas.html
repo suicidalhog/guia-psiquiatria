@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia de Otimização de Consultas</title>
+    <!-- Inclui a biblioteca Tailwind CSS para estilização rápida e responsiva -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 p-4 sm:p-8">
+    <!-- Contêiner principal com um layout responsivo e moderno -->
+    <div class="max-w-4xl mx-auto bg-white p-6 sm:p-10 rounded-3xl shadow-xl">
+        <header class="mb-8 text-center">
+            <h1 class="text-3xl sm:text-4xl font-bold text-slate-800 mb-2">Guia de Otimização para Consultas</h1>
+            <p class="text-slate-500 text-lg">Estratégias para uma rotina mais fluida e focada</p>
+        </header>
+
+        <!-- Container de login, visível por padrão -->
+        <div id="login-container">
+            <h2 class="text-2xl font-semibold text-slate-700 mb-4 pb-2 border-b-2 border-slate-200">
+                Acesso Seguro
+            </h2>
+            <div class="p-6 bg-blue-50 rounded-lg shadow-sm text-slate-600">
+                <p class="mb-4">Para acessar o seu guia personalizado, é necessário fazer login. O login é um passo importante para proteger os seus dados e as ferramentas que você utiliza.</p>
+                <div class="flex items-center space-x-2">
+                    <button id="login-button" class="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-300">Entrar</button>
+                    <span id="login-status" class="text-sm font-medium"></span>
+                </div>
+                <p id="user-id-display" class="mt-4 text-sm font-mono"></p>
+            </div>
+        </div>
+
+        <!-- Conteúdo principal da aplicação, visível apenas após o login -->
+        <div id="app-content" class="hidden">
+            <!-- Navegação de Abas -->
+            <div class="flex flex-col sm:flex-row mb-6 border-b border-slate-200">
+                <button class="tab-button flex-1 py-3 px-4 text-sm font-semibold text-center text-slate-600 border-b-2 border-transparent hover:text-blue-600 hover:border-blue-600 transition duration-300 ease-in-out active" onclick="showTab('tab-rotina')">
+                    Otimização da Rotina
+                </button>
+                <button class="tab-button flex-1 py-3 px-4 text-sm font-semibold text-center text-slate-600 border-b-2 border-transparent hover:text-blue-600 hover:border-blue-600 transition duration-300 ease-in-out" onclick="showTab('tab-manual')">
+                    Modelos e Guias Manuais
+                </button>
+                <button class="tab-button flex-1 py-3 px-4 text-sm font-semibold text-center text-slate-600 border-b-2 border-transparent hover:text-blue-600 hover:border-blue-600 transition duration-300 ease-in-out" onclick="showTab('tab-desafios')">
+                    Gestão de Desafios
+                </button>
+                <button class="tab-button flex-1 py-3 px-4 text-sm font-semibold text-center text-slate-600 border-b-2 border-transparent hover:text-blue-600 hover:border-blue-600 transition duration-300 ease-in-out" onclick="showTab('tab-checklists')">
+                    Checklists e Ferramentas
+                </button>
+                <button id="logout-button" class="ml-4 py-2 px-4 bg-red-500 text-white text-sm font-semibold rounded-lg shadow-md hover:bg-red-600 transition-colors duration-300">Sair</button>
+            </div>
+
+            <!-- Conteúdo das Abas (os mesmos da versão anterior) -->
+            <div id="tab-rotina" class="tab-content">
+                <section id="section-pontualidade" class="mb-8">
+                    <h2 class="flex items-center justify-between text-2xl font-semibold text-slate-700 mb-4 pb-2 border-b-2 border-slate-200">
+                        <span>1. A Chegada e a Preparação</span>
+                    </h2>
+                    <div class="space-y-4">
+                        <div class="p-6 bg-blue-50 rounded-lg shadow-sm">
+                            <h3 class="font-semibold text-xl text-blue-700 mb-2">Planejamento Antecipado</h3>
+                            <ul class="list-disc list-inside space-y-1 text-slate-600">
+                                <li>Planeje o tempo de deslocamento com uma margem de 10-15 minutos.</li>
+                                <li>Deixe a agenda e os materiais prontos na noite anterior.</li>
+                                <li>Utilize esse tempo extra para relaxar e organizar a mente.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="section-dinamica" class="mb-8">
+                    <h2 class="flex items-center justify-between text-2xl font-semibold text-slate-700 mb-4 pb-2 border-b-2 border-slate-200">
+                        <span>2. A Dinâmica da Sessão</span>
+                    </h2>
+                    <div class="space-y-4">
+                        <div class="p-6 bg-green-50 rounded-lg shadow-sm">
+                            <h3 class="font-semibold text-xl text-green-700 mb-2">Estrutura e Foco</h3>
+                            <ul class="list-disc list-inside space-y-1 text-slate-600">
+                                <li>**"O que é mais importante hoje?"**: Inicie a consulta com uma pergunta que direcione o foco.</li>
+                                <li>**Use um relógio discreto**: Mantenha o controle do tempo sem causar desconforto.</li>
+                                <li>**Comunicação clara**: No final, resuma os pontos e estabeleça um "contrato" de tempo para a próxima sessão.</li>
+                            </ul>
+                        </div>
+                        <div class="p-6 bg-purple-50 rounded-lg shadow-sm">
+                            <h3 class="font-semibold text-xl text-purple-700 mb-2">Ferramentas de Suporte</h3>
+                            <ul class="list-disc list-inside space-y-1 text-slate-600">
+                                <li>**Questionários validados**: Use escalas para monitorar o progresso dos sintomas de forma rápida.</li>
+                                <li>**Anote em blocos**: Faça anotações sucintas durante a consulta e complete-as no intervalo.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="section-rotina" class="mb-8">
+                    <h2 class="flex items-center justify-between text-2xl font-semibold text-slate-700 mb-4 pb-2 border-b-2 border-slate-200">
+                        <span>3. Otimização da Rotina Geral</span>
+                    </h2>
+                    <div class="space-y-4">
+                        <div class="p-6 bg-orange-50 rounded-lg shadow-sm">
+                            <h3 class="font-semibold text-xl text-orange-700 mb-2">Aproveitando o Tempo entre Consultas</h3>
+                            <ul class="list-disc list-inside space-y-1 text-slate-600">
+                                <li>**Intervalos estratégicos**: Use o tempo de buffer para fazer anotações, ir ao banheiro ou simplesmente respirar.</li>
+                                <li>**Evite interrupções**: Instrua a equipe a segurar ligações e mensagens urgentes durante a consulta.</li>
+                            </ul>
+                        </div>
+                        <div class="p-6 bg-pink-50 rounded-lg shadow-sm">
+                            <h3 class="font-semibold text-xl text-pink-700 mb-2">Delegação Inteligente</h3>
+                            <ul class="list-disc list-inside space-y-1 text-slate-600">
+                                <li>**Tarefas administrativas**: Deixe o agendamento de retorno e a confirmação de consultas a cargo da equipe ou de um software.</li>
+                                <li>**Software de agendamento**: Considere ferramentas que automatizam o processo de agendamento e lembretes.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div id="tab-manual" class="tab-content hidden">
+                <section class="mb-8 p-6 bg-slate-100 rounded-lg shadow-lg">
+                    <h2 class="text-2xl font-semibold text-slate-700 mb-4 pb-2 border-b-2 border-slate-300">
+                        Templates e Modelos
+                    </h2>
+                    <div class="space-y-4">
+                        <div class="p-6 bg-white rounded-lg border border-slate-200">
+                            <h3 class="font-semibold text-xl text-slate-700 mb-2">Modelo de Informação para Paciente (Ansiedade)</h3>
+                            <p class="text-slate-600 mb-4">
+                                **O que é ansiedade?** É uma resposta natural do corpo ao estresse. No entanto, quando a ansiedade é excessiva e persistente, ela pode interferir no seu dia a dia.
+                            </p>
+                            <p class="text-slate-600 mb-4">
+                                **Como podemos lidar?** O tratamento pode incluir a combinação de medicamentos e terapia. Exercícios de respiração e práticas de mindfulness também podem ajudar.
+                            </p>
+                            <p class="text-slate-600">
+                                **O que observar:** Fique atento aos seus gatilhos e procure registrar como você se sente após cada prática.
+                            </p>
+                        </div>
+                        <div class="p-6 bg-white rounded-lg border border-slate-200">
+                            <h3 class="font-semibold text-xl text-slate-700 mb-2">Modelo de Lembrete de Consulta</h3>
+                            <p class="text-slate-600 mb-4">
+                                Prezado(a) [Nome do Paciente],<br><br>
+                                Este é um lembrete para a sua próxima consulta. <br>
+                                **Data:** [Inserir Data] <br>
+                                **Horário:** [Inserir Horário] <br>
+                                **Local:** [Inserir Local] <br><br>
+                                Estamos à sua disposição caso precise reagendar ou tenha alguma dúvida.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="mb-8 p-6 bg-slate-100 rounded-lg shadow-lg">
+                    <h2 class="text-2xl font-semibold text-slate-700 mb-4 pb-2 border-b-2 border-slate-300">
+                        Templates para Dinamizar Consultas
+                    </h2>
+                    <div class="space-y-4">
+                        <div class="p-6 bg-white rounded-lg border border-slate-200">
+                            <h3 class="font-semibold text-xl text-slate-700 mb-2">Modelo de Abertura</h3>
+                            <p class="text-slate-600 mb-4">
+                                Olá, [Nome do Paciente]. Para garantir que tenhamos tempo para o que é mais importante hoje, qual seria o tema que você gostaria de priorizar na nossa conversa?
+                            </p>
+                            <p class="text-slate-600 mb-4">
+                                Ou, para começar, gostaria de me atualizar sobre a sua semana?
+                            </p>
+                        </div>
+                        <div class="p-6 bg-white rounded-lg border border-slate-200">
+                            <h3 class="font-semibold text-xl text-slate-700 mb-2">Modelo de Refoco (Meio da Consulta)</h3>
+                            <p class="text-slate-600 mb-4">
+                                Entendo, esse é um ponto muito importante. Para garantir que abordemos tudo o que planejamos, poderíamos voltar a esse tema com mais detalhes na próxima sessão?
+                            </p>
+                            <p class="text-slate-600 mb-4">
+                                Antes de passarmos para o próximo tópico, qual seria a próxima etapa que você vê para lidar com [Ponto Anterior]?
+                            </p>
+                        </div>
+                        <div class="p-6 bg-white rounded-lg border border-slate-200">
+                            <h3 class="font-semibold text-xl text-slate-700 mb-2">Modelo de Fechamento</h3>
+                            <p class="text-slate-600 mb-4">
+                                Estamos chegando ao fim da nossa sessão. Para resumir, abordamos [Ponto 1] e [Ponto 2]. O que você leva de mais importante da nossa conversa hoje?
+                            </p>
+                            <p class="text-slate-600 mb-4">
+                                Nosso plano para a próxima sessão será focar em [Novo Tema] e continuar monitorando [Sintoma]. Você se sente à vontade com isso?
+                            </p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div id="tab-checklists" class="tab-content hidden">
+                <section class="mb-8 p-6 bg-slate-100 rounded-lg shadow-lg">
+                    <h2 class="text-2xl font-semibold text-slate-700 mb-4 pb-2 border-b-2 border-slate-300">
+                        Checklists e Ferramentas de Avaliação
+                    </h2>
+                    <div class="space-y-6">
+                        <div class="p-6 bg-white rounded-lg border border-slate-200">
+                            <h3 class="font-semibold text-xl text-slate-700 mb-2">Checklist de Ansiedade</h3>
+                            <div class="space-y-2 text-slate-600">
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="ansiedade-1" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="ansiedade-1">Preocupação excessiva e persistente?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="ansiedade-2" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="ansiedade-2">Inquietação ou sensação de nervosismo?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="ansiedade-3" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="ansiedade-3">Tensão muscular ou dor?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="ansiedade-4" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="ansiedade-4">Problemas para dormir (dificuldade de iniciar ou manter o sono)?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="ansiedade-5" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="ansiedade-5">Irritabilidade?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="ansiedade-6" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="ansiedade-6">Dificuldade de concentração?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="ansiedade-7" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="ansiedade-7">Sintomas físicos (palpitação, suor, tremores)?</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6 bg-white rounded-lg border border-slate-200">
+                            <h3 class="font-semibold text-xl text-slate-700 mb-2">Checklist de Depressão</h3>
+                            <div class="space-y-2 text-slate-600">
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="depressao-1" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="depressao-1">Humor deprimido ou tristeza persistente?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="depressao-2" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="depressao-2">Perda de interesse ou prazer em atividades (anedonia)?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="depressao-3" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="depressao-3">Alterações no apetite ou peso?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="depressao-4" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="depressao-4">Distúrbios do sono (insônia ou hipersonia)?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="depressao-5" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="depressao-5">Fadiga ou perda de energia?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="depressao-6" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="depressao-6">Sentimentos de culpa ou inutilidade?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="depressao-7" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="depressao-7">Dificuldade de concentração ou indecisão?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="depressao-8" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="depressao-8">Pensamentos de morte ou suicídio?</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6 bg-white rounded-lg border border-slate-200">
+                            <h3 class="font-semibold text-xl text-slate-700 mb-2">Checklist de Transtorno Disfórico Pré-menstrual</h3>
+                            <div class="space-y-2 text-slate-600">
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="tdpm-1" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="tdpm-1">Sintomas emocionais intensos na fase pré-menstrual?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="tdpm-2" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="tdpm-2">Irritabilidade, raiva ou aumento de conflitos interpessoais?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="tdpm-3" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="tdpm-3">Humor deprimido, ansiedade ou tensão?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="tdpm-4" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="tdpm-4">Sintomas físicos (inchaço, dor nas mamas, dores musculares)?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="tdpm-5" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="tdpm-5">Os sintomas melhoram após o início da menstruação?</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6 bg-white rounded-lg border border-slate-200">
+                            <h3 class="font-semibold text-xl text-slate-700 mb-2">Checklist de Transtorno de Personalidade</h3>
+                            <div class="space-y-2 text-slate-600">
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="tp-1" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="tp-1">Padrões persistentes e inflexíveis de pensamento, sentimento e comportamento?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="tp-2" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="tp-2">Problemas em relacionamentos interpessoais?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="tp-3" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="tp-3">Dificuldade em se adaptar a diferentes situações?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="tp-4" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="tp-4">O padrão de comportamento causa sofrimento ou prejuízo funcional?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="tp-5" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="tp-5">Padrões de comportamento desviam da norma cultural?</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6 bg-white rounded-lg border border-slate-200">
+                            <h3 class="font-semibold text-xl text-slate-700 mb-2">Checklist de Transtorno Afetivo Bipolar</h3>
+                            <div class="space-y-2 text-slate-600">
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="tab-1" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="tab-1">Episódios de humor elevado, expansivo ou irritável (mania/hipomania)?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="tab-2" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="tab-2">Episódios de humor deprimido?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="tab-3" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="tab-3">Aumento da energia ou agitação?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="tab-4" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="tab-4">Diminuição da necessidade de sono?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="tab-5" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="tab-5">Discurso rápido ou fuga de ideias?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="tab-6" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="tab-6">Grandiosidade ou autoestima inflada?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="tab-7" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="tab-7">Comportamentos de risco ou impulsividade?</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6 bg-white rounded-lg border border-slate-200">
+                            <h3 class="font-semibold text-xl text-slate-700 mb-2">Checklist de TDAH</h3>
+                            <div class="space-y-2 text-slate-600">
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="tdah-1" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="tdah-1">Dificuldade persistente de prestar atenção aos detalhes?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="tdah-2" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="tdah-2">Problemas para se organizar em tarefas e atividades?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="tdah-3" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="tdah-3">Esquecimento frequente de atividades diárias?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="tdah-4" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="tdah-4">Inquietação ou incapacidade de ficar parado?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="tdah-5" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="tdah-5">Impaciência, dificuldade de esperar a sua vez?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="tdah-6" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="tdah-6">Fala excessiva ou interrupção de terceiros?</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6 bg-white rounded-lg border border-slate-200">
+                            <h3 class="font-semibold text-xl text-slate-700 mb-2">Checklist de Autismo</h3>
+                            <div class="space-y-2 text-slate-600">
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="autismo-1" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="autismo-1">Déficits persistentes na comunicação social e interação?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="autismo-2" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="autismo-2">Padrões restritos e repetitivos de comportamento, interesses ou atividades?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="autismo-3" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="autismo-3">Interesses muito específicos e intensos?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="autismo-4" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="autismo-4">Sensibilidade sensorial (hipo ou hiper-sensibilidade)?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="autismo-5" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="autismo-5">Movimentos motores repetitivos ou estereotipados?</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6 bg-white rounded-lg border border-slate-200">
+                            <h3 class="font-semibold text-xl text-slate-700 mb-2">Checklist de Insônia</h3>
+                            <div class="space-y-2 text-slate-600">
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="insonia-1" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="insonia-1">Dificuldade para iniciar ou manter o sono?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="insonia-2" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="insonia-2">Acordar cedo e não conseguir voltar a dormir?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="insonia-3" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="insonia-3">Insatisfação com a qualidade ou quantidade do sono?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="insonia-4" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="insonia-4">Sonolência diurna, fadiga ou irritabilidade?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="insonia-5" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="insonia-5">Problemas de concentração ou memória?</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="insonia-6" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="insonia-6">Ocorre pelo menos 3 noites por semana?</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6 bg-white rounded-lg border border-slate-200">
+                            <h3 class="font-semibold text-xl text-slate-700 mb-2">Checklist para Outros Quadros</h3>
+                            <div class="space-y-2 text-slate-600">
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="outros-1" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="outros-1">Histórico de trauma? (Para TEPT)</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="outros-2" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="outros-2">Medos ou fobias específicas? (Para Transtornos Fóbicos)</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="outros-3" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="outros-3">Obsessões (pensamentos intrusivos) e Compulsões (comportamentos repetitivos)? (Para TOC)</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="outros-4" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="outros-4">Percepções sensoriais anormais (alucinações) ou crenças fixas (delírios)? (Para Transtornos Psicóticos)</label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="outros-5" class="rounded-md h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300">
+                                    <label for="outros-5">Episódios de pânico inesperados? (Para Transtorno de Pânico)</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div id="tab-desafios" class="tab-content hidden">
+                <section id="section-desafios" class="mb-8">
+                    <h2 class="flex items-center justify-between text-2xl font-semibold text-slate-700 mb-4 pb-2 border-b-2 border-slate-200">
+                        <span>4. Gerenciando Pacientes Desafiadores</span>
+                    </h2>
+                    <div class="space-y-4">
+                        <div class="p-6 bg-red-50 rounded-lg shadow-sm">
+                            <h3 class="font-semibold text-xl text-red-700 mb-2">Estratégias para Consultas Difíceis</h3>
+                            <ul class="list-disc list-inside space-y-1 text-slate-600">
+                                <li>**Mantenha a Calma e a Empatia:** O comportamento desafiador é frequentemente um sintoma. Lembre-se do seu papel e mantenha a serenidade.</li>
+                                <li>**Estabeleça Limites de Forma Gentil:** Comunique claramente as expectativas da consulta, como a duração e o foco.</li>
+                                <li>**Valide o Sentimento, Não o Comportamento:** Reconheça o que o paciente sente ("Entendo sua frustração"), mas mantenha os limites para o comportamento ("Vamos manter a conversa focada").</li>
+                                <li>**Técnicas de Desescalada:** Use a escuta ativa e o silêncio para acalmar a situação. Evite confrontos.</li>
+                                <li>**Foco no Objetivo da Sessão:** Leve a conversa de volta ao propósito da consulta, redirecionando o paciente de forma sutil.</li>
+                                <li>**Priorize seu Autocuidado:** Se a situação se tornar insustentável, lembre-se de que encaminhar o paciente pode ser a melhor opção para ambos.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Seção para Bloco de Notas Local (mantida fora das abas para fácil acesso) -->
+            <section class="mb-8 p-6 bg-slate-100 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-semibold text-slate-700 mb-4 pb-2 border-b-2 border-slate-300">
+                    📝 Bloco de Notas Local
+                </h2>
+                <p class="text-slate-600 mb-4">
+                    Anote rapidamente seus pensamentos e pontos-chave. O conteúdo é salvo automaticamente no seu navegador.
+                </p>
+                <textarea id="local-notes" rows="10" placeholder="Suas anotações aparecerão aqui..." class="w-full p-3 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-400 resize-y"></textarea>
+            </section>
+        </div>
+    </div>
+
+    <!-- Scripts do Firebase e Lógica da Aplicação -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithCustomToken, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global variables provided by the canvas environment
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        let auth, db, userId;
+        const loginContainer = document.getElementById('login-container');
+        const appContent = document.getElementById('app-content');
+        const loginStatus = document.getElementById('login-status');
+        const userIdDisplay = document.getElementById('user-id-display');
+        const localNotes = document.getElementById('local-notes');
+        const localStorageKey = 'consultation_notes_data';
+        
+        // Função para simular a chamada segura da API
+        async function callSecureAPI() {
+            try {
+                // AQUI: Em um ambiente de produção real, a chamada da API do Gemini não deve ser feita diretamente do cliente.
+                // Em vez disso, a chamada seria feita para uma função de back-end (por exemplo, Firebase Cloud Function)
+                // que, por sua vez, faria a chamada segura para a API do Gemini usando a chave de API de forma secreta.
+                
+                // Exemplo simulado de uma chamada de back-end:
+                console.log("Chamando a API de forma segura (simulado)...");
+                loginStatus.textContent = "Chamando API...";
+
+                const simulatedResponse = {
+                    message: "Resposta da API simulada. Sua chave de API está segura!",
+                    data: "Nenhuma funcionalidade de IA está ativa nesta demonstração."
+                };
+                
+                setTimeout(() => {
+                    console.log("Resposta recebida:", simulatedResponse);
+                    loginStatus.textContent = "API conectada com sucesso (simulado).";
+                }, 2000);
+                
+            } catch (error) {
+                console.error("Erro na chamada da API:", error);
+                loginStatus.textContent = "Erro na chamada da API (simulado).";
+            }
+        }
+
+        // Lógica de Autenticação
+        const initAuth = async () => {
+            if (!firebaseConfig) {
+                console.error("Configuração do Firebase não encontrada.");
+                loginStatus.textContent = "Erro: Configuração do Firebase ausente.";
+                return;
+            }
+
+            const app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            db = getFirestore(app);
+
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    userId = user.uid;
+                    loginContainer.classList.add('hidden');
+                    appContent.classList.remove('hidden');
+                    userIdDisplay.textContent = `Usuário logado: ${userId}`;
+                    console.log("Usuário logado:", user.uid);
+                    await callSecureAPI();
+                } else {
+                    userId = null;
+                    loginContainer.classList.remove('hidden');
+                    appContent.classList.add('hidden');
+                    userIdDisplay.textContent = "";
+                    console.log("Usuário deslogado.");
+                }
+            });
+
+            if (initialAuthToken) {
+                try {
+                    console.log("Tentando login com token...");
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } catch (error) {
+                    console.error("Erro ao fazer login com token:", error);
+                    loginStatus.textContent = "Erro no login. Tente novamente.";
+                }
+            }
+        };
+
+        document.getElementById('login-button').addEventListener('click', () => {
+            // Re-autentica com o token inicial fornecido pelo ambiente
+            if (initialAuthToken) {
+                signInWithCustomToken(auth, initialAuthToken).catch(error => {
+                    console.error("Erro no login:", error);
+                    loginStatus.textContent = "Erro no login. Tente novamente.";
+                });
+            } else {
+                 console.error("Token de autenticação inicial não encontrado.");
+                 loginStatus.textContent = "Erro: Token de login ausente.";
+            }
+        });
+
+        document.getElementById('logout-button').addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+                console.log("Usuário deslogado com sucesso.");
+            } catch (error) {
+                console.error("Erro ao deslogar:", error);
+            }
+        });
+        
+        // Lógica das Abas e Bloco de Notas (mantidas do arquivo anterior)
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedNotes = localStorage.getItem(localStorageKey);
+            if (savedNotes) {
+                localNotes.value = savedNotes;
+            }
+            localNotes.addEventListener('input', () => {
+                localStorage.setItem(localStorageKey, localNotes.value);
+            });
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+            window.showTab = function(tabId) {
+                tabContents.forEach(content => {
+                    content.classList.add('hidden');
+                });
+                tabButtons.forEach(button => {
+                    button.classList.remove('active', 'border-blue-600', 'text-blue-600');
+                    button.classList.add('border-transparent', 'text-slate-600');
+                });
+                document.getElementById(tabId).classList.remove('hidden');
+                document.querySelector(`[onclick="showTab('${tabId}')"]`).classList.add('active', 'border-blue-600', 'text-blue-600');
+            };
+            showTab('tab-rotina');
+        });
+
+        initAuth();
+    </script>
+</body>
+</html>
